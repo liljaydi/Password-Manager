@@ -101,4 +101,16 @@ public class Website extends Account {
 		return new Website(service, username, password, url);
 	}
 	
+	
+	@Override
+	public void saveAccountLine(BufferedWriter bw) throws IOException {
+		String encryptedPass = Crypto.encrypt(password);
+		
+		bw.write("WEBSITE"     + "\u001F" + 
+				 service       + "\u001F" + 
+				 username      + "\u001F" + 
+				 encryptedPass + "\u001F" + 
+				 url);
+		bw.newLine();
+	}
 }
