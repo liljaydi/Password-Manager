@@ -7,7 +7,6 @@ import java.io.IOException;
 import java.util.Scanner;
 
 import manager.Crypto;
-import manager.Util;
 
 public class Bank extends Account {
 	private String accNumber;
@@ -113,5 +112,20 @@ public class Bank extends Account {
 		String pin       = Crypto.decrypt(data[5]);
 		
 		return new Bank(service, username, password, accNumber, pin);
+	}
+	
+	@Override
+	public void saveAccountLine(BufferedWriter bw) throws IOException {
+		String encryptedPass = Crypto.encrypt(password);
+		String encryptedAccNum = Crypto.encrypt(String.valueOf(accNumber));
+		String encryptedPin = Crypto.encrypt(String.valueOf(pin));
+		
+		bw.write("BANK"          + "\u001F" + 
+				 service         + "\u001F" + 
+				 username        + "\u001F" + 
+				 encryptedPass   + "\u001F" + 
+				 encryptedAccNum + "\u001F" + 
+				 encryptedPin);
+		bw.newLine();
 	}
 }

@@ -98,4 +98,14 @@ public class Account {
 		return new Account(service, username, password);
 	}
 	
+	public void saveAccountLine(BufferedWriter bw) throws IOException {
+		String encryptedPass = Crypto.encrypt(password);
+		
+		bw.write("GENERAL" + "\u001F" + 
+		         service   + "\u001F" + 
+				 username  + "\u001F" + 
+		         encryptedPass);
+		bw.newLine();
+	}
+	
 }
