@@ -27,25 +27,25 @@ public class Website extends Account {
 		System.out.print("Enter website  : ");
 		String service = sc.nextLine();
 		if (service.isEmpty()) {
-			System.out.println("\n[Cancelled]"); return null;
+			System.out.println("\n[Cancelled]\n"); return null;
 		}
 
 		System.out.print("Enter username : ");
 		String username = sc.nextLine();
 		if (username.isEmpty()) {
-			System.out.println("\n[Cancelled]"); return null;
+			System.out.println("\n[Cancelled]\n"); return null;
 		}
 			
 		System.out.print("Enter password : ");
 		String password = sc.nextLine();
 		if (password.isEmpty()) {
-			System.out.println("\n[Cancelled]"); return null;
+			System.out.println("\n[Cancelled]\n"); return null;
 		}
 		
 		System.out.print("Enter URL      : ");
 		String url = sc.nextLine();
 		if (url.isEmpty()) {
-			System.out.println("\n[Cancelled]"); return null;
+			System.out.println("\n[Cancelled]\n"); return null;
 		}
 		
 		return new Website(service, username, password, url);
@@ -70,8 +70,17 @@ public class Website extends Account {
 	}
 
 	@Override
-	public void displayFormat() {
+	public void displayShort() {
 		System.out.println(service + " [WEBSITE]");
+		System.out.println("    Username : " + username);
+		//System.out.println("    Password : ●●●●●●●●");
+		//System.out.println("    URL      : " + url);
+		System.out.println();
+	}
+	
+	@Override
+	public void displayFull() {
+		System.out.println("    " + service + " [WEBSITE]");
 		System.out.println("    Username : " + username);
 		System.out.println("    Password : " + password);
 		System.out.println("    URL      : " + url);

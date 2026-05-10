@@ -26,19 +26,19 @@ public class Account {
 		System.out.print("Enter App      : ");
 		String service = sc.nextLine();
 		if (service.isEmpty()) {
-			System.out.println("\n[Cancelled]"); return null;
+			System.out.println("\n[Cancelled]\n"); return null;
 		}
 
 		System.out.print("Enter username : ");
 		String username = sc.nextLine();
 		if (username.isEmpty()) {
-			System.out.println("\n[Cancelled]"); return null;
+			System.out.println("\n[Cancelled]\n"); return null;
 		}
 			
 		System.out.print("Enter password : ");
 		String password = sc.nextLine();
 		if (password.isEmpty()) {
-			System.out.println("\n[Cancelled]"); return null;
+			System.out.println("\n[Cancelled]\n"); return null;
 		}
 
 		return new Account(service, username, password);
@@ -71,8 +71,14 @@ public class Account {
 		}
 	}
 	
-	public void displayFormat() {
+	public void displayShort() {
 		System.out.println(service + " [GENERAL]");
+		System.out.println("    Username : " + username);
+		System.out.println();
+	}
+	
+	public void displayFull() {
+		System.out.println("    " + service + " [GENERAL]");
 		System.out.println("    Username : " + username);
 		System.out.println("    Password : " + password);
 		System.out.println();

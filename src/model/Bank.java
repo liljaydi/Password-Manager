@@ -24,34 +24,42 @@ public class Bank extends Account {
 		System.out.print("Enter Bank name      : ");
 		String service = sc.nextLine();
 		if (service.isEmpty()) {
-			System.out.println("\n[Cancelled]"); return null;
+			System.out.println("\n[Cancelled]\n"); return null;
 		}
 
 		System.out.print("Enter username       : ");
 		String username = sc.nextLine();
 		if (username.isEmpty()) {
-			System.out.println("\n[Cancelled]"); return null;
+			System.out.println("\n[Cancelled]\n"); return null;
 		}
 			
 		System.out.print("Enter password       : ");
 		String password = sc.nextLine();
 		if (password.isEmpty()) {
-			System.out.println("\n[Cancelled]"); return null;
+			System.out.println("\n[Cancelled]\n"); return null;
 		}
 			
 		System.out.print("Enter Account number : ");
 		String accNumber = sc.nextLine();
+		if (accNumber.isEmpty()) {
+			System.out.println("\n[Cancelled]\n"); return null;
+		}
+		
 		// check if it's all digits
 		if (!accNumber.matches("\\d+")) {
-		    System.out.println("Invalid account number");
+		    System.out.println("\n[Invalid account number]\n");
 		    return null;
 		}
 			
 		System.out.print("Enter pin            : ");
 		String pin = sc.nextLine();
+		if (pin.isEmpty()) {
+			System.out.println("\n[Cancelled]\n"); return null;
+		}
+		
 		// check if it's all digits
 		if (!accNumber.matches("\\d+")) {
-			System.out.println("Invalid PIN");
+			System.out.println("\n[Invalid PIN]\n");
 			return null;
 		}
 				
@@ -80,12 +88,19 @@ public class Bank extends Account {
 	}
 	
 	@Override
-	public void displayFormat() {
+	public void displayShort() {
 		System.out.println(service + " [BANK]");
+		System.out.println("    Username : " + username);
+		System.out.println();
+	}
+	
+	@Override
+	public void displayFull() {
+		System.out.println("    " + service + " [BANK]");
 		System.out.println("    Username : " + username);
 		System.out.println("    Password : " + password);
 		System.out.println("    Account# : " + accNumber);
-		System.out.println("    pin      : " + pin);
+		System.out.println("    PIN      : " + pin);
 		System.out.println();
 	}
 	

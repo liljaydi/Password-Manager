@@ -7,7 +7,7 @@ import javax.crypto.spec.SecretKeySpec;
 
 public class Crypto {
 	
-	private static final String KEY = "1234567890123456";
+	private static final String KEY = "aB3$kL9#mZ2@xQ7!";
 	
 	public static String encrypt(String credential) {
 	    try {

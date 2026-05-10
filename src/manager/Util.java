@@ -1,6 +1,7 @@
 package manager;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Scanner;
 
 import model.Account;
@@ -29,7 +30,7 @@ public class Util {
 		int i = 1;
 		for (Account acc : list) {
 			System.out.print("[" + i + "] ");
-			acc.displayFormat();
+			acc.displayShort();
 			i++;
 		}
 	}
@@ -84,6 +85,53 @@ public class Util {
 		} catch (NumberFormatException e) {
 			return false;
 		}	
+	}
+	
+	public static String[] promptDeleteInput(Scanner sc, int size) {
+		
+		String[] option;
+		boolean invalid = false;
+		int count = 1;
+		
+		do {
+			invalid = false;
+			
+			// this is where the input is receive (eg. Option: 2,5,6)
+			System.out.print("Option: ");
+			String options = sc.nextLine();
+			
+			option = options.split(",\\s*");
+			
+			// scan all option inputed and check if valid
+			for (String opt : option) {
+				if (Util.validifyVariousInput(opt, 0, size)) continue;
+				if (count >= 4 ) {
+					if (count >= 5) {
+						System.out.println("Too many invalid attempts. Exiting program...");
+						System.exit(0);
+					}
+					else System.out.println("Too many invalid attempts. Please restart or check your input.");
+				}
+				else System.out.println("Invalid input! [input must be 0-" + size + "]");
+				invalid = true;
+				count++;
+				break;
+			}
+			
+			// if user input was invalid... redo the process
+		} while (invalid);
+		
+		// this part reverses the deletion process..
+		
+	    // sorts the array from highest to lowest. So 1,3,2 becomes [3, 2, 1].
+		// The reason — when you delete by index, deleting a lower index first shifts everything up. Example:
+				
+		// accounts = [A, B, C, D]  → indices 0,1,2,3
+		// delete index 1 (B) first → [A, C, D]  → now index 2 is D, not C!
+				
+		Arrays.sort(option, (a, b) -> Integer.parseInt(b) - Integer.parseInt(a));
+		
+		return option;
 	}
 	
 }
