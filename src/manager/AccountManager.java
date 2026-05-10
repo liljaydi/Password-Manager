@@ -31,18 +31,20 @@ public class AccountManager {
 	
 	// to add account depending on the type (website, bank, or general)
 	public void addAccountOption() {
-		System.out.println("Select account type:");
-		System.out.println("[1] Website Account");
-		System.out.println("[2] Bank Account");
-		System.out.println("[3] General");
-		System.out.println("[0] Cancel");
-		int option = Util.validifyInput(0, 3, "Option: ", "Invalid input! [input must be 0-3]", sc);
 		
-		switch(option) {
+		while (true) {
+			System.out.println("Select account type:");
+			System.out.println("[1] Website Account");
+			System.out.println("[2] Bank Account");
+			System.out.println("[3] General");
+			System.out.println("[0] Back");
+			int option = Util.validifyInput(0, 3, "Option: ", "Invalid input! [input must be 0-3]", sc);
+			
+			switch(option) {
 			case 1:
 				// for adding new website account
 				Account newWebsite = Website.create(sc);
-				if(newWebsite == null) return; //user cancel
+				if(newWebsite == null) continue; //user cancel
 				
 				if (Util.canAdd(newWebsite, accounts, sc)) {
 					accounts.add(newWebsite);
@@ -53,7 +55,7 @@ public class AccountManager {
 			case 2:
 				// for adding new bank account
 				Account newBankAccount = Bank.create(sc);
-				if(newBankAccount == null) return; //user cancel
+				if(newBankAccount == null) continue; //user cancel
 				
 				if (Util.canAdd(newBankAccount, accounts, sc)) {
 					accounts.add(newBankAccount);
@@ -64,7 +66,7 @@ public class AccountManager {
 			case 3:
 				// for adding new general account
 				Account newAccount = Account.create(sc);
-				if(newAccount == null) return; //user cancel
+				if(newAccount == null) continue; //user cancel
 				
 				if (Util.canAdd(newAccount, accounts, sc)) {
 					accounts.add(newAccount);
@@ -77,6 +79,9 @@ public class AccountManager {
 			default:
 				System.out.println("\nInvalid option");
 				return;
+			}
+
+			break;
 		}
 		
 		System.out.print("\nPress enter to go back to menu...");
@@ -152,10 +157,41 @@ public class AccountManager {
 	        return;
 	    }
 		
-		Util.displayList(accounts);
+		while (true) {
+			Util.displayList(accounts);
+			
+			System.out.println("════════════════════════════");
+			System.out.println("Select an account to view (1-" + accounts.size() + ")");
+			System.out.println("Enter 0 to exit");
+			int num = Util.validifyInput(0, accounts.size(), "Option: ", 
+											("Invalid input! [input must be 1-" + accounts.size() + "]"), 
+											sc);
+			
+			if (num != 0) {
+				Account acc = accounts.get(num-1);
+				System.out.println();
+				acc.displayFull();
+				
+				System.out.println("[1] Back");
+				System.out.println("[0] Exit");
+				int option = Util.validifyInput(0, 1, "Option: ", "Invalid input! [input must be 0 or 1]", sc);
+				
+				if (option == 1) {
+					System.out.println();
+					continue;
+				} else if (option == 0) {
+					return;
+				} else {
+					System.out.println("Something went wrong");
+					return;
+				}
+			} else if (num == 0) {
+				return;
+			} else {
+				System.out.println("Something went wrong");
+			}
+		}
 		
-		System.out.print("Press enter to go back to menu...");
-	    sc.nextLine();
 	}
 	
 	// This is called from main option 2 - search account
@@ -182,7 +218,7 @@ public class AccountManager {
 	    String query = sc.nextLine().toLowerCase();
 
 	    if (query.isEmpty()) { // ← stops blank enter from matching everything
-	        System.out.println("Search cannot be empty");
+	        System.out.println("\n[Search cannot be empty]\n");
 	        return;
 	    }
 	    
@@ -217,26 +253,49 @@ public class AccountManager {
 	        return;
 	    }
 
-	    System.out.println("Delete Account");
-	    System.out.println("[1] Search by site/username");
-	    System.out.println("[2] Browse all accounts");
-	    System.out.println("[0] Back");
-	    int deleteOption = Util.validifyInput(0, 2, "Option: ", "Invalid input! [input must be 0-2]", sc);
-	    System.out.println();
+	   while (true) {
+		   boolean successful;
+		   
+		   System.out.println("Delete Account");
+		   System.out.println("[1] Search by site/username");
+		   System.out.println("[2] Browse all accounts");
+		   System.out.println("[0] Back");
+		   int deleteOption = Util.validifyInput(0, 2, "Option: ", "Invalid input! [input must be 0-2]", sc);
 
-	    if (deleteOption == 1) {
-	        searchAccount("Search account to delete: ");
-	        if (results.isEmpty()) return;
-	        deletePrompt(results.size());
-	        deleteFromResults(); // This is where the delete from results (method) gets used
-
-	    } else if (deleteOption == 2) {
-	        Util.displayList(accounts);
-	        deletePrompt(accounts.size());
-	        deleteByIndex(); // This is where the delete by index (method) gets used
-
-	    } else if (deleteOption == 0) return;
-	    else System.out.println("Something went wrong");
+		   if (deleteOption == 1) {
+			   System.out.println();
+			   searchAccount("Search account to delete: ");
+		       if (results.isEmpty()) {
+		    	   System.out.println();
+		    	   continue;
+		       }
+		       deletePrompt(results.size());
+		       successful = deleteFromResults(); // This is where the delete from results (method) gets used
+		       
+		       if (!successful) {
+		    	   System.out.println();
+		    	   continue;
+		       }
+		       
+		       return;
+		       
+		   } else if (deleteOption == 2) {
+			   System.out.println();
+		       Util.displayList(accounts);
+		       deletePrompt(accounts.size());
+		       successful = deleteByIndex(); // This is where the delete by index (method) gets used
+		       
+		       if (!successful) {
+		    	   System.out.println();
+		    	   continue;
+		       }
+		       
+		       return;
+		       
+		   } else if (deleteOption == 0) return;
+		   else System.out.println("Something went wrong");
+	   }
+	   
 	}
 	
 	// helper prompt for deleteAccountMenu
@@ -272,7 +331,7 @@ public class AccountManager {
 	// Deletes from the full accounts list (Browse all path)
 	// Index entered by user maps directly to accounts ArrayList
 	
-	/**this code below allows for multiple deletion in one input
+	/* this code below allows for multiple deletion in one input
 	 * faster deletion process than individually
 	 * 
 	 * receive user input in string
@@ -283,124 +342,105 @@ public class AccountManager {
 	
 	// NOTE: This process below still accepts single input 
 	
-	private void deleteByIndex() {
+	private boolean deleteByIndex() {
 		
-		String[] option;
-		boolean invalid = false;
-		int count = 1;
-		
-		do {
-			invalid = false;
-			System.out.print("Option: ");
-			String options = sc.nextLine();
-			
-			option = options.split(",\\s*");
-			for (String opt : option) {
-				if (Util.validifyVariousInput(opt, 0, accounts.size())) continue;
-				if (count >= 4 ) {
-					if (count >= 5) {
-						System.out.println("Too many invalid attempts. Exiting program...");
-						System.exit(0);
-					}
-					else System.out.println("Too many invalid attempts. Please restart or check your input.");
-				}
-				else System.out.println("Invalid input! [input must be 0-" + accounts.size() + "]");
-				invalid = true;
-				count++;
-				break;
-			}
-		} while (invalid);
-		
-		/* this part reverses the deletion process..
-		 * 
-		 * (reason)
-		 * Because when you delete by index while looping forward
-		 * the indices shift after each deletion, causing you to skip elements or hit wrong ones.
-		 */
-		
-		// to be studied
-		Arrays.sort(option, (a, b) -> Integer.parseInt(b) - Integer.parseInt(a));
+		String[] option = Util.promptDeleteInput(sc, accounts.size());
 		
 		ArrayList<String> seen = new ArrayList<>();
-		for (String o : option) {
-		    if (!seen.contains(o)) {
-		        seen.add(o);
+		
+		// this part removes duplicate
+		
+		for (String opt : option) {
+			//example: 3,1,1
+			// if seen does not contain 1 then add it to seen, if otherwise skip that 1 (in the 3rd loop)
+		    if (!seen.contains(opt)) {
+		        seen.add(opt);
 		    }
 		}
 		
-		for (String o : seen) {
+		// this part is to delete the chosen options
+		
+		for (String opt : seen) {
 		    try {
-		        int num = Integer.parseInt(o);
-		        if (num == 0) {
-		            System.out.println("No account deleted\n");
-		            return;
+		        int num = Integer.parseInt(opt);
+		        if (num == 0 && seen.size() == 1) {
+		            System.out.println("\n[No account deleted]");
+		            return false; // false - delete not successful
 		        }
+		        
+		        if (num == 0) continue; // skip 0 if mixed with other numbers
+		        
+		        // why num-1? Display:    1    2    3
+		        //            ArrayList:  0    1    2
+		        
 		        accounts.remove(num-1);
+		        
+		        // user types 1 → removes index 0 ✓
+		        // user types 2 → removes index 1 ✓
+		        // user types 3 → removes index 2 ✓
+		        
 		    } catch (NumberFormatException e) {
 		        System.out.println("Error, unable to format string to integer");
 		    }
 		}
 		
 		overwriteSave();
-		System.out.println("Account deleted successfully!\n");
+		System.out.println("\nAccount deleted successfully!\n");
 		System.out.print("Press enter to go back to menu...");
 		sc.nextLine();
-		System.out.println();		
 		
-		
+		return true; // true - delete successful
 	}
 	
 	// Deletes from search results (Search path)
 	// Index entered by user maps to results ArrayList, not accounts
 	// Removes by object reference since positions differ between results and accounts
 	
-	public void deleteFromResults() {
+	// NOTE: This process below still accepts single input 
+	
+	public boolean deleteFromResults() {
 	    
-		String[] option;
-	    boolean invalid = false;
-	    int count = 1;
-	    
-	    do {
-	        invalid = false;
-	        System.out.print("Option: ");
-	        String options = sc.nextLine();
-
-	        option = options.split(",\\s*");
-	        for (String opt : option) {
-	            if (Util.validifyVariousInput(opt, 0, results.size())) continue;
-	            if (count >= 4 ) {
-					if (count >= 5) {
-						System.out.println("Too many invalid attempts. Exiting program...");
-						System.exit(0);
-					}
-					else System.out.println("Too many invalid attempts. Please restart or check your input.");
-				}
-	            else System.out.println("Invalid input! [input must be 0-" + results.size() + "]");
-	            invalid = true;
-	            count++;
-	            break;
-	        }
-	    } while (invalid);
-
-	    Arrays.sort(option, (a, b) -> Integer.parseInt(b) - Integer.parseInt(a));
+		String[] option = Util.promptDeleteInput(sc, results.size());
+		
 	    ArrayList<String> seen = new ArrayList<>();
-	    for (String o : option) {
-	        if (!seen.contains(o)) seen.add(o);
+	    
+	    for (String opt : option) {
+	        if (!seen.contains(opt)) seen.add(opt);
 	    }
-
-	    for (String o : seen) {
-	        int num = Integer.parseInt(o);
-	        if (num == 0) {
-	            System.out.println("No account deleted\n");
-	            return;
-	        }
-	        accounts.remove(results.get(num - 1)); // removes by object reference
-	    }
-
+	    
+	    // this part is to delete the chosen options
+		
+	 	for (String opt : seen) {
+	 		try {
+	 			int num = Integer.parseInt(opt);
+	 		    if (num == 0 && seen.size() == 1) {
+	 		    	System.out.println("\n[No account deleted]");
+	 		        return false; // false - delete not successful
+	 		    }
+	 		        
+	 		    if (num == 0) continue; // skip 0 if mixed with other numbers
+	 		        
+	 		    // why num-1? Display:    1    2    3
+	 		    //            ArrayList:  0    1    2
+	 		        
+	 		    accounts.remove(results.get(num-1));
+	 		        
+	 		    // user types 1 → removes index 0 ✓
+	 		    // user types 2 → removes index 1 ✓
+	 		    // user types 3 → removes index 2 ✓
+	 		        
+	 		} catch (NumberFormatException e) {
+	 		    System.out.println("Error, unable to format string to integer");
+	 		}
+	 	}
+	    
 	    overwriteSave();
-	    System.out.println("Account deleted successfully!\n");
+	    System.out.println("\nAccount deleted successfully!\n");
 	    System.out.print("Press enter to go back to menu...");
 	    sc.nextLine();
+	    
+	    return true; // true - delete successful
+	    
 	}
 	
 	// This is the delete inside File happens

@@ -25,11 +25,11 @@ public class Main {
 		//this class is for managing accounts such as adding new accounts, delete, etc.
 		AccountManager am = new AccountManager(sc, accountFile, accounts);
 		
-		System.out.println("    ====================");
+		System.out.println("    ════════════════════");
 		System.out.println("    |                  |");
 		System.out.println("    | Password Manager |");
 		System.out.println("    |                  |");
-		System.out.println("    ====================\n");
+		System.out.println("    ════════════════════\n");
 		
 		System.out.println("Welcome to Password Manager!");
 		
@@ -40,14 +40,14 @@ public class Main {
 		int option;
 		do {
 			
-			System.out.println("=========== Menu ===========");
+			System.out.println("═══════════ Menu ═══════════");
 			System.out.println("| [1] Add Account          |");
 			System.out.println("| [2] Search Account       |");
 			System.out.println("| [3] View all Account     |");
 			System.out.println("| [4] Delete Account       |");
 			System.out.println("| [5] Settings             |");
 			System.out.println("| [6] Exit                 |");
-		    System.out.println("============================");
+			System.out.println("════════════════════════════");
 		    System.out.println("Enter the number of your choice");
 		    option = Util.validifyInput(1, 6, "Option: ", "Invalid input! [input must be 1-6]", sc);
 		    System.out.println();
