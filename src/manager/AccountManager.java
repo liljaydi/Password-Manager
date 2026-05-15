@@ -7,7 +7,6 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Scanner;
 
 import model.Account;
@@ -206,8 +205,6 @@ public class AccountManager {
 	
 	// This is called from main option 2 - search account
 	public void searchAccountMenu() {
-		int option;
-		
 		while (true) {
 			searchAccount("Search Account: ");
 			
@@ -387,10 +384,9 @@ public class AccountManager {
 	    if (opt == 1) {
 	        accounts.remove(0);
 	        overwriteSave();
-	        System.out.println("Account deleted successfully!\n");
+	        System.out.println("\nAccount deleted successfully!\n");
 	        System.out.print("Press enter to continue...");
 	        sc.nextLine();
-	        System.out.println();
 	    } else {
 	        System.out.println("\n[No account deleted]");
 	    }

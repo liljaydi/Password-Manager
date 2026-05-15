@@ -41,12 +41,12 @@ public class Main {
 		do {
 			
 			System.out.println("=========== Menu ===========");
-			System.out.println("| [1] Add Account          |");
-			System.out.println("| [2] Search Account       |");
-			System.out.println("| [3] View all Account     |");
-			System.out.println("| [4] Delete Account       |");
-			System.out.println("| [5] Settings             |");
-			System.out.println("| [0] Exit                 |");
+			System.out.println("  [1] Add Account           ");
+			System.out.println("  [2] Search Account        ");
+			System.out.println("  [3] View all Account      ");
+			System.out.println("  [4] Delete Account        ");
+			System.out.println("  [5] Settings              ");
+			System.out.println("  [0] Exit                  ");
 			System.out.println("============================");
 		    System.out.print("Select (0-5) ");
 		    option = Util.validifyInput(0, 5, "> _", "Invalid input! [input must be 1-6]", sc);

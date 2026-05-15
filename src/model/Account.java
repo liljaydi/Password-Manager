@@ -78,9 +78,9 @@ public class Account {
 	}
 	
 	public void displayFull() {
-		System.out.println(service + " [GENERAL]");
-		System.out.println("Username : " + username);
-		System.out.println("Password : " + password);
+		System.out.println("| " + service + " [GENERAL]");
+		System.out.println("| Username : " + username);
+		System.out.println("| Password : " + password);
 		System.out.println();
 	}
 	

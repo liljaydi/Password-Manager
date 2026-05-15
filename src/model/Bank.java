@@ -96,11 +96,11 @@ public class Bank extends Account {
 	
 	@Override
 	public void displayFull() {
-		System.out.println(service + " [BANK]");
-		System.out.println("Username : " + username);
-		System.out.println("Password : " + password);
-		System.out.println("Account# : " + accNumber);
-		System.out.println("PIN      : " + pin);
+		System.out.println("| " + service + " [BANK]");
+		System.out.println("| Username : " + username);
+		System.out.println("| Password : " + password);
+		System.out.println("| Account# : " + accNumber);
+		System.out.println("| PIN      : " + pin);
 		System.out.println();
 	}
 	

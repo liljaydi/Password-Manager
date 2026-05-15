@@ -78,10 +78,10 @@ public class Website extends Account {
 	
 	@Override
 	public void displayFull() {
-		System.out.println(service + " [WEBSITE]");
-		System.out.println("Username : " + username);
-		System.out.println("Password : " + password);
-		System.out.println("URL      : " + url);
+		System.out.println("| " + service + " [WEBSITE]");
+		System.out.println("| Username : " + username);
+		System.out.println("| Password : " + password);
+		System.out.println("| URL      : " + url);
 		System.out.println();
 	}
 	
