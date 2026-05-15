@@ -21,7 +21,7 @@ public class Account {
 	}
 	
 	public static Account create(Scanner sc) {
-		System.out.println("\nPress Enter on any field to cancel.");
+		System.out.println("\n[Press Enter on any field to cancel]");
 		
 		System.out.print("Enter App      : ");
 		String service = sc.nextLine();
@@ -72,15 +72,15 @@ public class Account {
 	}
 	
 	public void displayShort() {
-		System.out.println(service + " [GENERAL]");
+		System.out.println(service);
 		System.out.println("    Username : " + username);
 		System.out.println();
 	}
 	
 	public void displayFull() {
-		System.out.println("    " + service + " [GENERAL]");
-		System.out.println("    Username : " + username);
-		System.out.println("    Password : " + password);
+		System.out.println(service + " [GENERAL]");
+		System.out.println("Username : " + username);
+		System.out.println("Password : " + password);
 		System.out.println();
 	}
 	

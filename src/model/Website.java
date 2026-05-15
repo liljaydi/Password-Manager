@@ -22,7 +22,7 @@ public class Website extends Account {
 	//— patterns specifically about how objects get created. 
 	//Others in the family include Abstract Factory, Builder, and Singleton. 
 	public static Website create(Scanner sc) {
-		System.out.println("\nPress Enter on any field to cancel.");
+		System.out.println("\n[Press Enter on any field to cancel]");
 		
 		System.out.print("Enter website  : ");
 		String service = sc.nextLine();
@@ -71,19 +71,17 @@ public class Website extends Account {
 
 	@Override
 	public void displayShort() {
-		System.out.println(service + " [WEBSITE]");
+		System.out.println(service);
 		System.out.println("    Username : " + username);
-		//System.out.println("    Password : ●●●●●●●●");
-		//System.out.println("    URL      : " + url);
 		System.out.println();
 	}
 	
 	@Override
 	public void displayFull() {
-		System.out.println("    " + service + " [WEBSITE]");
-		System.out.println("    Username : " + username);
-		System.out.println("    Password : " + password);
-		System.out.println("    URL      : " + url);
+		System.out.println(service + " [WEBSITE]");
+		System.out.println("Username : " + username);
+		System.out.println("Password : " + password);
+		System.out.println("URL      : " + url);
 		System.out.println();
 	}
 	

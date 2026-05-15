@@ -33,12 +33,13 @@ public class AccountManager {
 	public void addAccountOption() {
 		
 		while (true) {
-			System.out.println("Select account type:");
+			System.out.println("Account type");
 			System.out.println("[1] Website Account");
 			System.out.println("[2] Bank Account");
 			System.out.println("[3] General");
 			System.out.println("[0] Back");
-			int option = Util.validifyInput(0, 3, "Option: ", "Invalid input! [input must be 0-3]", sc);
+			System.out.print("\nSelect (0-3) ");
+			int option = Util.validifyInput(0, 3, "> _", "Invalid input! [input must be 0-3]", sc);
 			
 			switch(option) {
 			case 1:
@@ -84,7 +85,7 @@ public class AccountManager {
 			break;
 		}
 		
-		System.out.print("\nPress enter to go back to menu...");
+		System.out.print("\nPress enter to continue...");
 		sc.nextLine();
 		
 	}
@@ -158,23 +159,32 @@ public class AccountManager {
 	    }
 		
 		while (true) {
+			System.out.println("======= ACCOUNT(S) =========");
 			Util.displayList(accounts);
 			
-			System.out.println("════════════════════════════");
-			System.out.println("Select an account to view (1-" + accounts.size() + ")");
-			System.out.println("Enter 0 to exit");
-			int num = Util.validifyInput(0, accounts.size(), "Option: ", 
-											("Invalid input! [input must be 1-" + accounts.size() + "]"), 
-											sc);
+			System.out.println("============================");
+			
+			int num = 0;
+			
+			if (accounts.size() == 1) {
+				System.out.print("[1] View  [0] Exit ");
+				num = Util.validifyInput(0, accounts.size(), "> _", 
+						("Invalid input! [input must be 0 or 1]"), 
+						sc);
+			} else {
+				System.out.print("Select account (1-" + accounts.size() + ") or 0 to exit ");
+				num = Util.validifyInput(0, accounts.size(), "> _", 
+						("Invalid input! [input must be 1-" + accounts.size() + "]"), 
+						sc);
+			}
 			
 			if (num != 0) {
 				Account acc = accounts.get(num-1);
 				System.out.println();
 				acc.displayFull();
 				
-				System.out.println("[1] Back");
-				System.out.println("[0] Exit");
-				int option = Util.validifyInput(0, 1, "Option: ", "Invalid input! [input must be 0 or 1]", sc);
+				System.out.print("[1] Back   [0] Exit  ");
+				int option = Util.validifyInput(0, 1, "> _", "Invalid input! [input must be 0 or 1]", sc);
 				
 				if (option == 1) {
 					System.out.println();
@@ -196,11 +206,72 @@ public class AccountManager {
 	
 	// This is called from main option 2 - search account
 	public void searchAccountMenu() {
-		searchAccount("Search Account: ");
-		if (!results.isEmpty()) {
-	        System.out.print("Press enter to go back to menu...");
-	        sc.nextLine();
-	    }
+		int option;
+		
+		while (true) {
+			searchAccount("Search Account: ");
+			
+			if (!results.isEmpty()) { // if result is not empty
+		        if (results.size() == 1) { // if result is only one
+		        	System.out.println("============================");
+		        	System.out.print("[1] View  [0] Exit ");
+		        	int input = Util.validifyInput(0, 1, "> _", "Invalid input! [input must be 0 or 1]", sc);
+		        	
+		        	if (input == 1) {
+		        		Account acc = results.get(input-1);
+		        		System.out.println();
+		        		acc.displayFull();
+		        		System.out.print("[1] Search Again  [0] Exit ");
+		        		int anotherInput = Util.validifyInput(0, 1, "> _", "Invalid input! [input must be 0 or 1]", sc);
+		        		
+		        		if (anotherInput == 1) {
+		        			System.out.println();
+		        			continue;
+		        		} else {
+		        			return;
+		        		}
+		        		
+		        	} else if (input == 0) {
+		        		return;
+		        	}
+		        	
+		        } else { // multiple results
+		        	System.out.println("============================");
+		        	System.out.print("Select to view (1-" + results.size() + ") or 0 to Exit ");
+		        	int input = Util.validifyInput(0, results.size(), "> _", ("Invalid input! [input must be 0-" + results.size() + "]"), sc);
+		        	
+		        	if (input == 0) {
+		        		return;
+		        	}
+		        	
+		        	Account acc = results.get(input-1);
+		        	System.out.println();
+		        	acc.displayFull();
+		        	
+		        	System.out.print("[1] Search Again  [0] Exit ");
+	        		int anotherInput = Util.validifyInput(0, 1, "> _", "Invalid input! [input must be 0 or 1]", sc);
+	        		
+	        		if (anotherInput == 1) {
+	        			System.out.println();
+	        			continue;
+	        		} else {
+	        			return;
+	        		}
+		        }
+		        
+		    } else { // if result is empty
+		    	System.out.print("\n[1] Search Again  [0] Exit ");
+		    	int input = Util.validifyInput(0, 1, "> _", "Invalid input! [input must be 0 or 1]", sc);
+		    	
+		    	if (input == 1) {
+		    		System.out.println();
+		    		continue;
+		    	} else {
+		    		return;
+		    	}
+		    }
+		}
+		
 	}
 	
 	// this is called from searchAccountMenu... (above)
@@ -242,7 +313,7 @@ public class AccountManager {
 	public void deleteAccountMenu() { 
 	    if (accounts.isEmpty()) {
 	        System.out.println("No account to delete\n");
-	        System.out.print("Press enter to go back to menu...");
+	        System.out.print("Press enter to continue...");
 	        sc.nextLine();
 	        System.out.println();
 	        return;
@@ -259,8 +330,8 @@ public class AccountManager {
 		   System.out.println("Delete Account");
 		   System.out.println("[1] Search by site/username");
 		   System.out.println("[2] Browse all accounts");
-		   System.out.println("[0] Back");
-		   int deleteOption = Util.validifyInput(0, 2, "Option: ", "Invalid input! [input must be 0-2]", sc);
+		   System.out.println("[0] Back\n");
+		   int deleteOption = Util.validifyInput(0, 2, "Select (0-2) > _", "Invalid input! [input must be 0-2]", sc);
 
 		   if (deleteOption == 1) {
 			   System.out.println();
@@ -301,30 +372,27 @@ public class AccountManager {
 	// helper prompt for deleteAccountMenu
 	private void deletePrompt(int size) {
 	    if (size == 1) {
-	        System.out.println("[1] Delete the account");
-	        System.out.println("[0] Cancel");
+	        System.out.print("[1] Delete the account  [0] Cancel ");
 	    } else if (size == 2) {
-	        System.out.println("Enter number(s) to delete (e.g. 1 or 1,2)");
-	        System.out.println("Enter 0 to cancel");
+	        System.out.println("Enter number(s) to delete (e.g. 1 or 1,2) or 0 to cancel");
 	    } else {
-	        System.out.println("Enter number(s) to delete (e.g. 1 or 1,2," + size + ")");
-	        System.out.println("Enter 0 to cancel");
+	        System.out.println("Enter number(s) to delete (e.g. 1 or 1,2," + size + ") or 0 to cancel");
 	    }
 	}
 	
 	private void deleteSingle() {
 	    Util.displayList(accounts);
 	    deletePrompt(1);
-	    int opt = Util.validifyInput(0, 1, "Option: ", "Invalid input! [input must be 0 or 1]", sc);
+	    int opt = Util.validifyInput(0, 1, "> _", "Invalid input! [input must be 0 or 1]", sc);
 	    if (opt == 1) {
 	        accounts.remove(0);
 	        overwriteSave();
 	        System.out.println("Account deleted successfully!\n");
-	        System.out.print("Press enter to go back to menu...");
+	        System.out.print("Press enter to continue...");
 	        sc.nextLine();
 	        System.out.println();
 	    } else {
-	        System.out.println("No account deleted.\n");
+	        System.out.println("\n[No account deleted]");
 	    }
 	}
 	
@@ -386,7 +454,7 @@ public class AccountManager {
 		
 		overwriteSave();
 		System.out.println("\nAccount deleted successfully!\n");
-		System.out.print("Press enter to go back to menu...");
+		System.out.print("Press enter to continue...");
 		sc.nextLine();
 		
 		return true; // true - delete successful
@@ -436,7 +504,7 @@ public class AccountManager {
 	    
 	    overwriteSave();
 	    System.out.println("\nAccount deleted successfully!\n");
-	    System.out.print("Press enter to go back to menu...");
+	    System.out.print("Press enter to continue...");
 	    sc.nextLine();
 	    
 	    return true; // true - delete successful

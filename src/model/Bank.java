@@ -19,7 +19,7 @@ public class Bank extends Account {
 	}
 	
 	public static Bank create(Scanner sc) {
-		System.out.println("\nPress Enter on any field to cancel.");
+		System.out.println("\n[Press Enter on any field to cancel]");
 		
 		System.out.print("Enter Bank name      : ");
 		String service = sc.nextLine();
@@ -89,18 +89,18 @@ public class Bank extends Account {
 	
 	@Override
 	public void displayShort() {
-		System.out.println(service + " [BANK]");
+		System.out.println(service);
 		System.out.println("    Username : " + username);
 		System.out.println();
 	}
 	
 	@Override
 	public void displayFull() {
-		System.out.println("    " + service + " [BANK]");
-		System.out.println("    Username : " + username);
-		System.out.println("    Password : " + password);
-		System.out.println("    Account# : " + accNumber);
-		System.out.println("    PIN      : " + pin);
+		System.out.println(service + " [BANK]");
+		System.out.println("Username : " + username);
+		System.out.println("Password : " + password);
+		System.out.println("Account# : " + accNumber);
+		System.out.println("PIN      : " + pin);
 		System.out.println();
 	}
 	
