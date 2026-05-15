@@ -97,7 +97,7 @@ public class Util {
 			invalid = false;
 			
 			// this is where the input is receive (eg. Option: 2,5,6)
-			System.out.print("Option: ");
+			System.out.print("> _");
 			String options = sc.nextLine();
 			
 			option = options.split(",\\s*");
