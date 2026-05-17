@@ -286,7 +286,7 @@ public class AccountManager {
 	    String query = sc.nextLine().toLowerCase();
 
 	    if (query.isEmpty()) { // ← stops blank enter from matching everything
-	        System.out.println("\n[Search cannot be empty]\n");
+	        System.out.println("\n[Search cannot be empty]");
 	        return;
 	    }
 	    
