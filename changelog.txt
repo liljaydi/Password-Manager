@@ -1,0 +1,180 @@
+========================================
+        PASSWORD MANAGER - CHANGELOG
+========================================
+
+
+[V3.0.0] - 2026-05-18
+----------------------------------------
+
+ARCHITECTURE
+  - Account is now a concrete base class instead of a single flat class.
+    Website and Bank extend it as subclasses (inheritance introduced)
+  - New model classes added:
+      model -> Website  (extends Account, adds url field)
+      model -> Bank     (extends Account, adds accNumber and pin fields)
+  - Encryption and decryption extracted out of Utility and moved into
+    its own dedicated class: Crypto
+  - MasterPasswordManager renamed to MasterPassword
+  - Utility renamed to Util
+  - MenuPasswordManager (entry point) renamed to Main
+  - AccountManager now uses dependency injection — receives Scanner,
+    File, and ArrayList from Main instead of creating its own
+
+NEW FEATURES
+  - Account type selection on add: user now chooses between
+      [1] Website Account  (site, username, password, URL)
+      [2] Bank Account     (bank name, username, password, account number, PIN)
+      [3] General          (app/service, username, password)
+  - Polymorphic display: each account type shows its own fields
+      Website → shows URL
+      Bank    → shows Account# and PIN
+      General → shows only username and password
+  - Polymorphic search: Website searches by URL too; Bank searches
+    by account number too
+  - Polymorphic save: each subclass writes its own prefixed line format
+      GENERAL<US>service<US>username<US>encPass
+      WEBSITE<US>service<US>username<US>encPass<US>url
+      BANK<US>service<US>username<US>encPass<US>encAccNum<US>encPin
+    (<US> = ASCII Unit Separator U+001F)
+  - Type-aware loading: loadAccount() now dispatches by line prefix
+    (WEBSITE, BANK, GENERAL) and calls the correct subclass load()
+  - View All redesigned: now shows numbered list first, then user
+    selects a specific account to view full details
+  - Account number and PIN encrypted on save for Bank accounts
+  - Duplicate check now compares account type too — same site and
+    username across different types are no longer considered duplicates
+  - Replace duplicate: if a duplicate is detected, user is now asked
+    whether to replace it instead of silently rejecting
+
+IMPROVEMENTS
+  - saveAccount() and saveAccountOverwriteData() from Utility refactored
+    into two separate instance methods on each model class:
+      saveAccount(File)       — appends new entry (called once on add)
+      saveAccountLine(BufferedWriter) — writes one line (used by overwrite)
+  - checkDuplicate() from Utility replaced by isDuplicate() as an
+    instance method on Account, overridden where needed
+  - README upgraded from .txt to .md (Markdown format)
+  - Project now tracked with Git
+
+
+----------------------------------------
+
+
+[V2.1.1] - 2026-03-25
+----------------------------------------
+
+IMPROVEMENTS
+  - Corrupted entry handling expanded - instead of silently skipping,
+    the app now collects all corrupted entries and reports how many
+    were found on startup
+  - User can choose to see details of corrupted entries
+  - If details are viewed, user is given the option to permanently
+    delete the corrupted data with a confirmation step before proceeding
+  - If details are skipped, user is informed the corrupted data still
+    exists in account.txt and can be viewed externally
+  - Empty master password is now blocked during set password -
+    pressing Enter without typing anything shows an error and exits
+  - forgot_master_password.txt updated to reflect that masterPassword.txt
+    is now located inside the data/ folder
+
+
+----------------------------------------
+
+
+[V2.1.0] - 2026-03-24
+----------------------------------------
+
+ARCHITECTURE
+  - Settings logic moved out of MenuPasswordManager and into
+    MasterPasswordManager as its own method (masterPasswordSettings())
+  - Delete menu logic moved out of MenuPasswordManager and into
+    AccountManager as its own method (deleteAccountMenu())
+  - MenuPasswordManager is now cleaner - each menu case is a single
+    method call instead of inline logic blocks
+  - Data files (account.txt, masterPassword.txt) moved into a
+    dedicated data/ folder
+  - data/ folder is now auto-created on first run using mkdirs()
+
+NEW FEATURES
+  - Pressing Enter on any field during Add Account now cancels and
+    returns to menu instead of blocking or erroring
+  - Invalid input attempt limit added to validifyInput() and
+    deleteAccount() / deleteFromResults() - exits program after
+    5 consecutive invalid inputs
+  - Corrupted entry handling in loadAccount() - entries that don't
+    have exactly 3 fields are skipped with a warning instead of
+    crashing
+
+IMPROVEMENTS
+  - File delimiter changed from comma (,) to ASCII Unit Separator
+    (U+001F) to prevent conflicts with passwords or usernames
+    that contain commas
+  - "Press enter to go back to menu" prompt moved inside addAccount()
+    instead of being handled in the menu switch
+  - Added documentation files: readme.txt, forgot_master_password.txt,
+    termux_setup.txt
+
+
+----------------------------------------
+
+
+[V2.0.0] - 2026-03-09
+----------------------------------------
+
+ARCHITECTURE
+  - Refactored from a single-class design into a multi-class,
+    multi-package structure:
+      main    -> MenuPasswordManager (entry point)
+      manager -> AccountManager, MasterPasswordManager, Utility
+      model   -> Account
+  - Encryption and decryption moved from PasswordManager into Utility
+  - Master password logic extracted into its own class (MasterPasswordManager)
+  - Input validation centralized into reusable validifyInput() method in Utility
+  - Duplicate checking extracted into reusable checkDuplicate() method in Utility
+  - Two separate save methods introduced:
+      saveAccount()              - appends new account to file
+      saveAccountOverwriteData() - overwrites file (used after deletion)
+  - Two separate checkPassword() methods from V1 merged into one
+    reusable method with a custom prompt parameter
+
+NEW FEATURES
+  - Search: search accounts by site or username (partial, case-insensitive)
+  - Delete from search results: after searching, delete directly from results
+  - Multi-account deletion: delete multiple accounts in one input (e.g. 1,2,3)
+  - Duplicate deletion fix: duplicate numbers in delete input are now ignored
+  - Delete menu: when multiple accounts exist, choose between
+    searching first or browsing all before deleting
+  - "Press enter to go back to menu" prompt added after each action
+
+IMPROVEMENTS
+  - Empty input is now blocked for site, username, and password fields
+  - Menu and UI given a bordered box display
+  - Input validation no longer crashes on non-number input (try-catch
+    replaced by centralized validifyInput loop)
+  - "Welcome to Password Manager!" message added on startup
+  - Option numbers changed from [2] Back to [0] Back throughout for consistency
+
+
+----------------------------------------
+
+
+[V1.0.0] - 2026-02-21
+----------------------------------------
+
+  Initial release.
+
+  FEATURES
+  - Add account (site, username, password)
+  - View all accounts
+  - Delete account by site and username
+  - AES encryption for passwords
+  - Save and load accounts from file (accounts.txt)
+  - Master password protection (optional)
+    - Set master password
+    - Change master password
+    - Disable master password
+  - Duplicate account detection on add
+  - 3-attempt limit on master password entry
+
+
+========================================
