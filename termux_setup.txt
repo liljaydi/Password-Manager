@@ -1,0 +1,35 @@
+TERMUX SETUP FOR MOBILE — PASSWORD MANAGER
+
+——————————————————————
+
+(Download Termux application in playstore)
+
+1. First time setup (one time only)
+type in the terminal
+↓
+pkg update && pkg upgrade
+↓
+pkg install openjdk-21 (may differ eg. pkg install openjdk-18)
+↓
+termux-setup-storage
+↓
+echo "alias pm='clear && cd /sdcard/JAVACODE/PasswordManagerVersion2_Mobile && java main.MenuPasswordManager'" >> ~/.bashrc
+source ~/.bashrc
+
+Note: The file directory may vary depending on where you put the project folder. (The directory used here is based on Android internal storage)            
+
+——————————————————————
+
+2. If anything gets deleted or the whole file is deleted (recompile)
+Navigate to project folder first:
+Type in the terminal
+↓
+cd /sdcard/JAVACODE/PasswordManagerVersion2_Mobile
+↓
+Then compile:
+↓
+javac -d . src/main/java/main/*.java src/main/java/manager/*.java src/main/java/model/*.java
+
+Note: The file directory may vary depending on where you put the project folder. (The directory used here is based on Android internal storage)
+
+——————————————————————
