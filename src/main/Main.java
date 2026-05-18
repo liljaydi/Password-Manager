@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 import manager.AccountManager;
+import manager.MasterPassword;
 import manager.Util;
 import model.Account;
 
@@ -24,6 +25,7 @@ public class Main {
 		ArrayList<Account> accounts = new ArrayList<>();
 		//this class is for managing accounts such as adding new accounts, delete, etc.
 		AccountManager am = new AccountManager(sc, accountFile, accounts);
+		MasterPassword mp = new MasterPassword(passwordFile, sc);
 		
 		System.out.println("    ====================");
 		System.out.println("    |                  |");
@@ -34,6 +36,8 @@ public class Main {
 		System.out.println("Welcome to Password Manager!");
 		
 		System.out.println();
+		
+		mp.inputPassword();
 		
 		am.loadAccount();
 		
@@ -70,10 +74,7 @@ public class Main {
 					System.out.println();
 					break;
 				case 5:
-					//mpm.masterPasswordSettings();
-					System.out.println("This feature is still under development.\n");
-					System.out.print("Press enter to go back to menu...");
-					sc.nextLine();
+					mp.masterPasswordSettings();
 					System.out.println();
 					break;
 				case 0:
