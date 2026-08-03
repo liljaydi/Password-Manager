@@ -1,7 +1,8 @@
 # Password Manager
 
-A terminal-based password manager written in Java.
-Built as a first project — refactored several times. A `CHANGELOG.md` is included if you want to see how it evolved.
+A terminal-based password manager to store and manage your account credentials, written in Java.
+Built from scratch as a first project — structured around OOP with inheritance and package separation.
+See CHANGELOG.md for the full history.
 
 ---
 
@@ -29,15 +30,9 @@ Built as a first project — refactored several times. A `CHANGELOG.md` is inclu
 
 ## How to Run
 
-**Requirements:** Java 8 or higher
+**Requirements:** [JDK](https://www.oracle.com/java/technologies/downloads/) — Java 8 or higher
 
-```bash
-# Compile
-javac -d out src/**/*.java
-
-# Run
-java -cp out main.Main
-```
+Open the project in VSCode with the [Extension Pack for Java](https://marketplace.visualstudio.com/items?itemName=vscjava.vscode-java-pack) installed, then run `Main.java`.
 
 ---
 
