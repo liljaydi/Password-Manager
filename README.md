@@ -1,6 +1,6 @@
 # Password Manager
 
-A terminal-based password manager to store and manage your account credentials, written in Java.
+A terminal-based password manager written in Java.
 Built from scratch as a first project — structured around OOP with inheritance and package separation.
 See CHANGELOG.md for the full history.
 
