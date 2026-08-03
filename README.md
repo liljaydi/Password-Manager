@@ -2,7 +2,7 @@
 
 A terminal-based password manager written in Java.
 Built from scratch as a first project — structured around OOP with inheritance and package separation.
-See CHANGELOG.md for the full history.
+See changelog.txt for the full history.
 
 ---
 
