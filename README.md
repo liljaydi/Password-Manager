@@ -63,12 +63,11 @@ src/
 │   └── Main.java
 ├── manager/
 │   ├── AccountManager.java
+│   ├── Crypto.java
 │   ├── MasterPassword.java
 │   └── Util.java
-├── model/
-│   ├── Account.java
-│   ├── Website.java
-│   └── Bank.java
-└── crypto/
-    └── Crypto.java
+└── model/
+    ├── Account.java
+    ├── Website.java
+    └── Bank.java
 ```
